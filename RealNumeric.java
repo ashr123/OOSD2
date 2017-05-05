@@ -1,5 +1,12 @@
 public class RealNumeric implements Numeric
 {
+	private double num;
+	
+	public RealNumeric(double num)
+	{
+		this.num=num;
+	}
+	
 	@Override
 	public Numeric transformAdd(Numeric n)
 	{
@@ -22,5 +29,15 @@ public class RealNumeric implements Numeric
 	public boolean equals(Object obj)
 	{
 		return super.equals(obj);
+	}
+	
+	public double getNum()
+	{
+		return num;
+	}
+	
+	public void setNum(double num)
+	{
+		this.num=num;
 	}
 }
