@@ -7,6 +7,6 @@ public class Calculator
 	
 	private static void calc(String instruction)
 	{
-	
+		
 	}
 }
