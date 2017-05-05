@@ -8,29 +8,31 @@ public class Calculator
 	{
 		System.out.println("Sets Calculator");
 		System.out.println("==========================");
-		Scanner myScanner = new Scanner(System.in);
-		String str = myScanner.next();
+		Scanner myScanner=new Scanner(System.in);
+		String str=myScanner.next();
 		calc(str);
 	}
 	
 	private static void calc(String instruction)
 	{
-		String command = "";
-		String rest = "";
-		for (int i=0;i<instruction.length();i++)
+		String command="";
+		String rest="";
+		for (int i=0; i<instruction.length(); i++)
 		{
-			if (instruction.charAt(i)!=' '){
-				command += instruction.charAt(i);
+			if (instruction.charAt(i)!=' ')
+			{
+				command+=instruction.charAt(i);
 			}
-			else {
-				rest = instruction.substring(i+1);
+			else
+			{
+				rest=instruction.substring(i+1);
 				break;
 			}
 		}
 		
-		Set mySet1 = new Set();
-		StringTokenizer stk = new StringTokenizer(rest , ", ");
-		while(stk.hasMoreTokens())
+		Set mySet1=new Set();
+		StringTokenizer stk=new StringTokenizer(rest, ", ");
+		while (stk.hasMoreTokens())
 		{
 			if (stk.nextToken().charAt(0)=='{')
 			{
@@ -45,11 +47,8 @@ public class Calculator
 		}
 		
 		
-		
-		
-		
-		
-		switch (command){
+		switch (command)
+		{
 			case "size":
 				break;
 			case "contains":
