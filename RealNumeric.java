@@ -2,7 +2,7 @@ public class RealNumeric implements Numeric
 {
 	private double num;
 	
-	public RealNumeric(double num)
+	RealNumeric(double num)
 	{
 		this.num=num;
 	}
@@ -10,36 +10,47 @@ public class RealNumeric implements Numeric
 	@Override
 	public Numeric transformAdd(Numeric n)
 	{
-		return null;
+		if (n instanceof RationalNumeric)
+			setNum(getNum()+(double)((RationalNumeric)n).getA()/((RationalNumeric)n).getB());
+		else
+			setNum(getNum()+((RealNumeric)n).getNum());
+		return this;
 	}
 	
 	@Override
 	public Numeric transformMul(Numeric n)
 	{
-		return null;
+		if (n instanceof RationalNumeric)
+			setNum(getNum()*(double)((RationalNumeric)n).getA()/((RationalNumeric)n).getB());
+		else
+			setNum(getNum()*((RealNumeric)n).getNum());
+		return this;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return num+"";
+		return (isInteble() ? (int)getNum() : getNum())+"";
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj instanceof Numeric)
-			return obj.equals(this);
-		return false;
+		return obj instanceof Numeric && obj.equals(this);
 	}
 	
-	public double getNum()
+	double getNum()
 	{
 		return num;
 	}
 	
-	public void setNum(double num)
+	private void setNum(double num)
 	{
 		this.num=num;
+	}
+	
+	private boolean isInteble()
+	{
+		return getNum()==(int)getNum();
 	}
 }

@@ -14,15 +14,14 @@ public class Set implements Element
 	Set insert(Element e)
 	{
 		if (!set.contains(e))
-			set.addLast(e);
+			set.add(e);
 		return this;
 	}
 	
 	//Removes an element from the set if it exist in it.
 	Set remove(Element e)
 	{
-		if (set.contains(e))
-			set.remove(e);
+		set.remove(e);
 		return this;
 	}
 	
@@ -35,37 +34,66 @@ public class Set implements Element
 	//Unions the set with a given set.
 	Set union(Set s)
 	{
-		throw new UnsupportedOperationException();
+		for (Element e : s.set)
+			if (!member(e))
+				insert(e);
+		return this;
 	}
 	
 	Set intersect(Set s)
 	{
-		throw new UnsupportedOperationException();
+		Set output=new Set();
+		for (Element e : s.set)
+			if (member(e))
+				output.insert(e);;
+		return output;
 	}
 	
 	Set difference(Set s)
 	{
-		throw new UnsupportedOperationException();
+		for (Element e : s.set)
+			if (member(e))
+				remove(e);
+		return this;
 	}
 	
 	Set power()
 	{
-		throw new UnsupportedOperationException();
+		return power(set);
+	}
+	
+	private static Set power(LinkedList<Element> subList)
+	{
+		Set output=new Set();
+		if (subList.isEmpty())
+		{
+			output.insert(new Set());
+			return output;
+		}
+		Element head=subList.getFirst();
+		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
+		for (Element e: power(rest).set)
+		{
+			Set newSet=new Set();
+			newSet.insert(e);
+			newSet.insert(head);
+			output.insert(e);
+			output.insert(newSet);
+		}
+		return output;
 	}
 	
 	boolean contains(Set s)
 	{
-		for (Element e : s.set)
-		{
-			if (!this.set.contains(e))
-				return false;
-		}
-		return true;
+		return set.containsAll(s.set);
 	}
 	
 	boolean member(Element e)
 	{
-		throw new UnsupportedOperationException();
+		for (Element myE : set)
+			if (myE.equals(e))
+				return true;
+		return false;
 	}
 	
 	boolean deepExistence(Element e)
@@ -78,7 +106,11 @@ public class Set implements Element
 	public Element transformAdd(Numeric n)
 	{
 		for (Element e : set)
-			e.transformAdd(n);
+		{
+			Element temp=e.transformAdd(n);
+			if (temp!=e)
+				remove(e).insert(temp);
+		}
 		return this;
 	}
 	
@@ -87,7 +119,11 @@ public class Set implements Element
 	public Element transformMul(Numeric n)
 	{
 		for (Element e : set)
-			e.transformMul(n);
+		{
+			Element temp=e.transformMul(n);
+			if (temp!=e)
+				remove(e).insert(temp);
+		}
 		return this;
 	}
 	
@@ -95,14 +131,13 @@ public class Set implements Element
 	@Override
 	public String toString()
 	{
-		StringBuilder output =new StringBuilder("{");
-		for (Element e: set){
-			if (e.equals(set.getLast())){
+		StringBuilder output=new StringBuilder("{");
+		for (Element e : set)
+		{
+			if (e.equals(set.getLast()))
 				output.append(e).append("}");
-			}
-			else {
+			else
 				output.append(e).append(",");
-			}
 		}
 		return output.toString();
 	}
@@ -110,6 +145,6 @@ public class Set implements Element
 	@Override
 	public boolean equals(Object obj)
 	{
-		return super.equals(obj);
+		return obj instanceof Set && size()==((Set)obj).size() && contains((Set)obj);
 	}
 }
