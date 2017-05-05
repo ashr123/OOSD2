@@ -43,7 +43,6 @@ public class RationalNumeric implements Numeric
 	@Override
 	public String toString()
 	{
-		
 		return getA()/getB()<1 ? getA()+"/"+getB() : (isInteble()? getA()/getB()+"" :(double)getA()/getB()+"");
 	}
 	
@@ -52,9 +51,7 @@ public class RationalNumeric implements Numeric
 	{
 		if (obj instanceof RationalNumeric)
 			return (double)getA()/getB()==(double)((RationalNumeric)obj).getA()/((RationalNumeric)obj).getB();
-			if (obj instanceof RealNumeric)
-				return getA()/getB()==
-		return (obj instanceof Numeric) && true;
+		return obj instanceof RealNumeric && (double)getA()/getB()==((RealNumeric)obj).getNum();
 	}
 	
 	private boolean isInteble()
