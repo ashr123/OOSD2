@@ -22,7 +22,7 @@ public class RealNumeric implements Numeric
 	@Override
 	public String toString()
 	{
-		return super.toString();
+		return num+"";
 	}
 	
 	@Override
