@@ -11,25 +11,16 @@ public class Calculator
 		Scanner myScanner=new Scanner(System.in);
 		//noinspection InfiniteLoopStatement
 		while (true)
-			calc(myScanner.next());
+			calc(myScanner.nextLine());
 	}
 	
 	private static void calc(String instruction)
 	{
-		String command="";
-		String rest="";
-		for (int i=0; i<instruction.length(); i++)
-		{
-			if (instruction.charAt(i)!=' ')
-			{
-				command+=instruction.charAt(i);
-			}
-			else
-			{
-				rest=instruction.substring(i+1);
-				break;
-			}
-		}
+
+		StringTokenizer stk = new StringTokenizer(instruction, " ");
+		String command = stk.nextToken();
+		String rest = stk.nextToken();
+		
 		Set mySet=null;
 		StringTokenizer toSets=null;
 		if (!command.contentEquals("help") && !command.contentEquals("exit") && !command.contentEquals("bonus"))
@@ -144,7 +135,7 @@ public class Calculator
 	private static Set setParser(String rest){
 		
 		Stack<Set> myStack=new Stack<>();
-		myStack.push(new Set());
+		//myStack.push(new Set());
 		StringTokenizer stk=new StringTokenizer(rest, ", ");
 		while (stk.hasMoreTokens())
 		{
