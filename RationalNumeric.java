@@ -1,7 +1,16 @@
+/**
+ * A rational number is a number {@link #a}/{@link #b}, where {@code b≠0}.
+ */
 public class RationalNumeric implements Numeric
 {
 	private int a, b;
 	
+	/**
+	 * Constructs a rational number.
+	 * @param a a nominator
+	 * @param b a denominator
+	 * @throws ArithmeticException if {@code b=0}
+	 */
 	RationalNumeric(int a, int b) throws ArithmeticException
 	{
 		if (b==0)
@@ -11,6 +20,11 @@ public class RationalNumeric implements Numeric
 		this.b=b/g;
 	}
 	
+	/**
+	 * Adds a given {@link Numeric} number this number.
+	 * @param n the number to be added.
+	 * @return this {@link Numeric}
+	 */
 	@Override
 	public Numeric transformAdd(Numeric n)
 	{
@@ -23,9 +37,16 @@ public class RationalNumeric implements Numeric
 		}
 		else
 			return new RealNumeric((double)getA()/getB()+((RealNumeric)n).getNum());
+		if ((double)getA()/getB()>=1)
+			return new RealNumeric((double)getA()/getB());
 		return this;
 	}
 	
+	/**
+	 * Multiples a given {@link Numeric} number this number.
+	 * @param n the number to be multiplied.
+	 * @return this {@link Numeric}
+	 */
 	@Override
 	public Numeric transformMul(Numeric n)
 	{
@@ -38,6 +59,8 @@ public class RationalNumeric implements Numeric
 		}
 		else
 			return new RealNumeric((double)getA()/getB()*((RealNumeric)n).getNum());
+		if ((double)getA()/getB()>=1)
+			return new RealNumeric((double)getA()/getB());
 		return this;
 	}
 	
