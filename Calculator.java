@@ -22,7 +22,7 @@ public class Calculator
 		String rest=stk.nextToken();
 		
 		Set mySet=new Set();
-		StringTokenizer toSets=null;
+		StringTokenizer toSets;
 		if (!command.contentEquals("help") && !command.contentEquals("exit") && !command.contentEquals("bonus"))
 		{
 			toSets=new StringTokenizer(rest, " ");
@@ -32,44 +32,44 @@ public class Calculator
 		
 		switch (command)
 		{
-			case "size":
+			case "size"://Works
 				System.out.println(mySet+"\n"+mySet.size());
 				break;
-			case "contains":
-				mySet.contains(setParser(toSets.nextToken()));
+			case "contains"://Woks
+				System.out.println(mySet.contains(setParser(stk.nextToken())));
 				break;
-			case "member":
-				mySet.member(nextElementOrSet(toSets.nextToken()));
+			case "member"://Works
+				System.out.println(mySet.member(nextElementOrSet(stk.nextToken())));
 				break;
 			case "deepExistence":
-				mySet.deepExistence(nextElementOrSet(toSets.nextToken()));
+				mySet.deepExistence(nextElementOrSet(stk.nextToken()));
 				break;
 			case "equals":
-				mySet.equals(nextElementOrSet(toSets.nextToken()));
+				System.out.println(mySet.equals(nextElementOrSet(stk.nextToken())));
 				break;
-			case "insert":
-				mySet.insert(nextElementOrSet(toSets.nextToken()));
+			case "insert"://Works
+				System.out.println(mySet.insert(nextElementOrSet(stk.nextToken())));
 				break;
-			case "remove":
-				mySet.remove(nextElementOrSet(toSets.nextToken()));
+			case "remove"://Works
+				System.out.println(mySet.remove(nextElementOrSet(stk.nextToken())));
 				break;
-			case "union":
-				mySet.union(setParser(toSets.nextToken()));
+			case "union"://works
+				System.out.println(mySet.union(setParser(stk.nextToken())));
 				break;
-			case "intersect":
-				mySet.intersect(setParser(toSets.nextToken()));
+			case "intersect"://works
+				System.out.println(mySet.intersect(setParser(stk.nextToken())));
 				break;
 			case "difference":
-				mySet.difference(setParser(toSets.nextToken()));
+				System.out.println(mySet.difference(setParser(stk.nextToken())));
 				break;
 			case "power":
 				System.out.println(mySet.power());
 				break;
 			case "transformAdd":
-				mySet.transformAdd((Numeric)elementParser(toSets.nextToken()));
+				System.out.println(mySet.transformAdd((Numeric)elementParser(stk.nextToken())));
 				break;
 			case "transformMul":
-				mySet.transformMul((Numeric)elementParser(toSets.nextToken()));
+				System.out.println(mySet.transformMul((Numeric)elementParser(stk.nextToken())));
 				break;
 			case "help":
 				printHelp();
@@ -82,22 +82,14 @@ public class Calculator
 				break;
 			default:
 				System.out.println("Error: invalid command");
-			
-			
 		}
-		
 	}
 	
 	private static Element nextElementOrSet(String s)
 	{
 		if (s.charAt(0)=='{')
-		{
 			return setParser(s);
-		}
-		else
-		{
-			return elementParser(s);
-		}
+		return elementParser(s);
 	}
 	
 	private static void printHelp()
@@ -135,22 +127,6 @@ public class Calculator
 			return new RealNumeric(Double.parseDouble(nextToken));
 	}
 	
-//	private static Set setParser2(String rest, Set current)
-//	{
-//		StringTokenizer stk=new StringTokenizer(rest, ", ");
-//		while (stk.hasMoreElements())
-//		{
-//			String nextToken=stk.nextToken();
-//			if (nextToken.charAt(0)=='{')
-//			{
-//				Set newSet=new Set();
-//				current.insert(newSet);
-//
-//			}
-//
-//		}
-//	}
-	
 	private static Set setParser(String rest)
 	{
 		Stack<Set> myStack=new Stack<>();
@@ -170,10 +146,6 @@ public class Calculator
 				nextToken=nextToken.substring(0, nextToken.length()-1); //Removes the "}"
 				isFinished++;
 			}
-//			if (nextToken.length()==0) //If it's the empty Set
-//			{
-//				myStack.push(new Set());
-//			}
 			if (nextToken.length()!=0)
 				if (nextToken.contains("/")) // It's a Rational Number.
 				{
