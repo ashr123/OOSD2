@@ -9,8 +9,9 @@ public class Calculator
 		System.out.println("Sets Calculator");
 		System.out.println("==========================");
 		Scanner myScanner=new Scanner(System.in);
-		String str=myScanner.next();
-		calc(str);
+		//noinspection InfiniteLoopStatement
+		while (true)
+			calc(myScanner.next());
 	}
 	
 	private static void calc(String instruction)
@@ -29,10 +30,13 @@ public class Calculator
 				break;
 			}
 		}
-		
-		
-		StringTokenizer toSets = new StringTokenizer(rest," ");
-		Set mySet = setParser(toSets.nextToken());
+		Set mySet=null;
+		StringTokenizer toSets=null;
+		if (!command.contentEquals("help") && !command.contentEquals("exit") && !command.contentEquals("bonus"))
+		{
+			toSets=new StringTokenizer(rest, " ");
+			mySet=setParser(toSets.nextToken());
+		}
 		
 		
 		switch (command)
