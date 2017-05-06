@@ -200,6 +200,8 @@ public class Set implements Element
 		for (Element e : set)
 			if (!e.equals(set.getLast()))
 				output.append(e).append(",");
+		if (!set.isEmpty())
+			output.append(set.getLast());
 		return output.append("}").toString();
 	}
 	

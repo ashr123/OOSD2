@@ -33,7 +33,7 @@ public class Calculator
 		switch (command)
 		{
 			case "size":
-				mySet.size();
+				System.out.println(mySet+"\n"+mySet.size());
 				break;
 			case "contains":
 				mySet.contains(setParser(toSets.nextToken()));
@@ -140,14 +140,14 @@ public class Calculator
 		while (stk.hasMoreTokens())
 		{
 			String nextToken=stk.nextToken();
-			if (nextToken.charAt(0)=='{')
+			while (nextToken.charAt(0)=='{')
 			{
 				nextToken=nextToken.substring(1); //Removes the "{"
 				myStack.push(new Set());
 			}
-			if (nextToken.charAt(nextToken.length()-1)=='}')
+			while (nextToken.charAt(nextToken.length()-1)=='}')
 			{
-				nextToken=nextToken.substring(0, nextToken.length()-2); //Removes the "}"
+				nextToken=nextToken.substring(0, nextToken.length()-1); //Removes the "}"
 			}
 			if (nextToken.length()==0) //If it's the empty Set
 			{
@@ -166,7 +166,8 @@ public class Calculator
 					myStack.peek().insert(new RealNumeric(Double.parseDouble(nextToken)));
 				}
 			
-			myStack.peek().insert(myStack.pop());
+			if (myStack.size()>1)
+				myStack.peek().insert(myStack.pop());
 		}
 		return myStack.pop();
 	}
