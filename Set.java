@@ -21,47 +21,6 @@ public class Set implements Element
 	}
 	
 	/**
-	 * @param subList this subset.
-	 * @return a power-set of this {@link #set}.
-	 */
-	private static Set power(LinkedList<Element> subList)
-	{
-		Set output=new Set();
-		output.insert(new Set());
-		for (Element item : subList)
-		{
-			Set newSet=new Set();
-			for (Element subSet : output.set)
-			{
-				newSet.insert(subSet);
-				Set newSubset=new Set();
-				newSubset.insert(subSet);
-				newSubset.insert(item);
-				newSet.insert(newSubset);
-			}
-			output=newSet;
-		}
-
-//		Set output=new Set();
-//		if (subList.isEmpty())
-//		{
-//			output.insert(new Set());
-//			return output;
-//		}
-//		Element head=subList.getFirst();
-//		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
-//		for (Element e : power(rest).set)
-//		{
-//			Set newSet=new Set();
-//			newSet.insert(e);
-//			newSet.insert(head);
-//			output.insert(e);
-//			output.insert(newSet);
-//		}
-		return output;
-	}
-	
-	/**
 	 * Insert a new element.
 	 * @param e an element to be inserted.
 	 * @return this {@link #set}.
@@ -139,6 +98,46 @@ public class Set implements Element
 	Set power()
 	{
 		return power(set);
+	}
+	
+	/**
+	 * @param subList this subset.
+	 * @return a power-set of this {@link #set}.
+	 */
+	private static Set power(LinkedList<Element> subList)
+	{
+		Set output=new Set();
+		for (Element element : subList)
+		{
+			for (Element outputI : output.set)
+			{
+				Set newSet=new Set();
+				newSet.insert(outputI);
+				newSet.insert(element);
+				output.insert(newSet);
+			}
+			output.insert(new Set(subList));
+		}
+		
+		
+//		Set output=new Set();
+//		if (subList.isEmpty())
+//		{
+//			output.insert(new Set());
+//			return output;
+//		}
+//		Element head=subList.getFirst();
+//		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
+//		for (Element e : power(rest).set)
+//		{
+//			Set newSet=new Set();
+//			newSet.insert(e);
+//			newSet.insert(head);
+//			output.insert(e);
+//			output.insert(newSet);
+//		}
+//		return output;
+		return null;
 	}
 	
 	/**
