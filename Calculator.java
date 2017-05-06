@@ -16,12 +16,12 @@ public class Calculator
 	
 	private static void calc(String instruction)
 	{
-
-		StringTokenizer stk = new StringTokenizer(instruction, " ");
-		String command = stk.nextToken();
-		String rest = stk.nextToken();
 		
-		Set mySet=null;
+		StringTokenizer stk=new StringTokenizer(instruction, " ");
+		String command=stk.nextToken();
+		String rest=stk.nextToken();
+		
+		Set mySet=new Set();
 		StringTokenizer toSets=null;
 		if (!command.contentEquals("help") && !command.contentEquals("exit") && !command.contentEquals("bonus"))
 		{
@@ -63,7 +63,7 @@ public class Calculator
 				mySet.difference(setParser(toSets.nextToken()));
 				break;
 			case "power":
-				mySet.power();
+				System.out.println(mySet.power());
 				break;
 			case "transformAdd":
 				mySet.transformAdd((Numeric)elementParser(toSets.nextToken()));
@@ -90,10 +90,12 @@ public class Calculator
 	
 	private static Element nextElementOrSet(String s)
 	{
-		if (s.charAt(0)=='{'){
+		if (s.charAt(0)=='{')
+		{
 			return setParser(s);
 		}
-		else {
+		else
+		{
 			return elementParser(s);
 		}
 	}
@@ -101,39 +103,56 @@ public class Calculator
 	private static void printHelp()
 	{
 		System.out.println("size <set>\n"+
-				                   "contains <set> <set>\n"+
-				                   "member <set> <element>\n"+
-				                   "deepExistence <set> <element>\n"+
-				                   "equals <element> <element>\n"+
-				                   "insert <set> <element>\n"+
-				                   "remove <set> <element>\n"+
-				                   "union <set> <set>\n"+
-				                   "intersect <set> <set>\n"+
-				                   "difference <set> <set>\n"+
-				                   "power <set>\n"+
-				                   "transformAdd <element> <numeric>\n"+
-				                   "transformMul <element> <numeric>\n"+
-				                   "help\n"+
-				                   "bonus\n"+
-				                   "exit\n");
+		                   "contains <set> <set>\n"+
+		                   "member <set> <element>\n"+
+		                   "deepExistence <set> <element>\n"+
+		                   "equals <element> <element>\n"+
+		                   "insert <set> <element>\n"+
+		                   "remove <set> <element>\n"+
+		                   "union <set> <set>\n"+
+		                   "intersect <set> <set>\n"+
+		                   "difference <set> <set>\n"+
+		                   "power <set>\n"+
+		                   "transformAdd <element> <numeric>\n"+
+		                   "transformMul <element> <numeric>\n"+
+		                   "help\n"+
+		                   "bonus\n"+
+		                   "exit\n");
 	}
 	
 	private static Element elementParser(String s)
 	{
-		StringTokenizer stk = new StringTokenizer(s);
-		String nextToken = stk.nextToken();
-		if (nextToken.contains("/")){
+		StringTokenizer stk=new StringTokenizer(s);
+		String nextToken=stk.nextToken();
+		if (nextToken.contains("/"))
+		{
 			StringTokenizer divideStringTokenizer=new StringTokenizer(nextToken, "/");
 			int intA=Integer.parseInt(divideStringTokenizer.nextToken());
 			int intB=Integer.parseInt(divideStringTokenizer.nextToken());
-			return new RationalNumeric(intA,intB);
+			return new RationalNumeric(intA, intB);
 		}
 		else
 			return new RealNumeric(Double.parseDouble(nextToken));
 	}
 	
-	private static Set setParser(String rest){
-		
+//	private static Set setParser2(String rest, Set current)
+//	{
+//		StringTokenizer stk=new StringTokenizer(rest, ", ");
+//		while (stk.hasMoreElements())
+//		{
+//			String nextToken=stk.nextToken();
+//			if (nextToken.charAt(0)=='{')
+//			{
+//				Set newSet=new Set();
+//				current.insert(newSet);
+//
+//			}
+//
+//		}
+//	}
+	
+	private static Set setParser(String rest)
+	{
 		Stack<Set> myStack=new Stack<>();
 		//myStack.push(new Set());
 		StringTokenizer stk=new StringTokenizer(rest, ", ");
@@ -145,15 +164,17 @@ public class Calculator
 				nextToken=nextToken.substring(1); //Removes the "{"
 				myStack.push(new Set());
 			}
-			while (nextToken.charAt(nextToken.length()-1)=='}')
+			int isFinished=0;
+			while (nextToken.length()!=0 && nextToken.charAt(nextToken.length()-1)=='}')
 			{
 				nextToken=nextToken.substring(0, nextToken.length()-1); //Removes the "}"
+				isFinished++;
 			}
-			if (nextToken.length()==0) //If it's the empty Set
-			{
-				myStack.push(new Set());
-			}
-			else
+//			if (nextToken.length()==0) //If it's the empty Set
+//			{
+//				myStack.push(new Set());
+//			}
+			if (nextToken.length()!=0)
 				if (nextToken.contains("/")) // It's a Rational Number.
 				{
 					StringTokenizer divideStringTokenizer=new StringTokenizer(nextToken, "/");
@@ -166,8 +187,12 @@ public class Calculator
 					myStack.peek().insert(new RealNumeric(Double.parseDouble(nextToken)));
 				}
 			
-			if (myStack.size()>1)
-				myStack.peek().insert(myStack.pop());
+			while (myStack.size()>1 && isFinished>0)
+			{
+				Set temp=myStack.pop();
+				myStack.peek().insert(temp);
+				isFinished--;
+			}
 		}
 		return myStack.pop();
 	}

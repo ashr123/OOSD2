@@ -15,6 +15,11 @@ public class Set implements Element
 		set=new LinkedList<>();
 	}
 	
+	public Set(LinkedList<Element> list)
+	{
+		set=list;
+	}
+	
 	/**
 	 * Insert a new element.
 	 * @param e an element to be inserted.
@@ -102,22 +107,35 @@ public class Set implements Element
 	private static Set power(LinkedList<Element> subList)
 	{
 		Set output=new Set();
-		if (subList.isEmpty())
+		for (Element element : subList)
 		{
-			output.insert(new Set());
-			return output;
+			for (Element outputI : output.set)
+			{
+				Set newSet=new Set();
+				newSet.insert(outputI);
+				newSet.insert(element);
+				output.insert(newSet);
+			}
+			output.insert(new Set(subList));
 		}
-		Element head=subList.getFirst();
-		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
-		for (Element e : power(rest).set)
-		{
-			Set newSet=new Set();
-			newSet.insert(e);
-			newSet.insert(head);
-			output.insert(e);
-			output.insert(newSet);
-		}
-		return output;
+		
+//		Set output=new Set();
+//		if (subList.isEmpty())
+//		{
+//			output.insert(new Set());
+//			return output;
+//		}
+//		Element head=subList.getFirst();
+//		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
+//		for (Element e : power(rest).set)
+//		{
+//			Set newSet=new Set();
+//			newSet.insert(e);
+//			newSet.insert(head);
+//			output.insert(e);
+//			output.insert(newSet);
+//		}
+//		return output;
 	}
 	
 	/**

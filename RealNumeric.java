@@ -37,7 +37,7 @@ public class RealNumeric implements Numeric
 	@Override
 	public String toString()
 	{
-		return isInteble() ? (int)getNum()+"" : getNum()+"";
+		return isIntable() ? (int)getNum()+"" : getNum()+"";
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class RealNumeric implements Numeric
 	/**
 	 * @return {@code true} if this number can be convert to integer without loss of information, {@code false} otherwise.
 	 */
-	private boolean isInteble()
+	private boolean isIntable()
 	{
 		return getNum()==(int)getNum();
 	}
