@@ -1,7 +1,14 @@
+/**
+ * Represents a real number {@link #num}.
+ */
 public class RealNumeric implements Numeric
 {
 	private double num;
 	
+	/**
+	 * Creates a new real number.
+	 * @param num the number to be created.
+	 */
 	RealNumeric(double num)
 	{
 		this.num=num;
@@ -49,6 +56,9 @@ public class RealNumeric implements Numeric
 		this.num=num;
 	}
 	
+	/**
+	 * @return {@code true} if this number can be convert to integer without loss of information, {@code false} otherwise.
+	 */
 	private boolean isInteble()
 	{
 		return getNum()==(int)getNum();

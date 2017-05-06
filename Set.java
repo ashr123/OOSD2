@@ -198,11 +198,9 @@ public class Set implements Element
 	{
 		StringBuilder output=new StringBuilder("{");
 		for (Element e : set)
-			if (e.equals(set.getLast()))
-				output.append(e).append("}");
-			else
+			if (!e.equals(set.getLast()))
 				output.append(e).append(",");
-		return output.toString();
+		return output.append("}").toString();
 	}
 	
 	@Override

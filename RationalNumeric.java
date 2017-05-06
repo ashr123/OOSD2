@@ -20,11 +20,6 @@ public class RationalNumeric implements Numeric
 		this.b=b/g;
 	}
 	
-	/**
-	 * Adds a given {@link Numeric} number this number.
-	 * @param n the number to be added.
-	 * @return this {@link Numeric}
-	 */
 	@Override
 	public Numeric transformAdd(Numeric n)
 	{
@@ -42,11 +37,6 @@ public class RationalNumeric implements Numeric
 		return this;
 	}
 	
-	/**
-	 * Multiples a given {@link Numeric} number this number.
-	 * @param n the number to be multiplied.
-	 * @return this {@link Numeric}
-	 */
 	@Override
 	public Numeric transformMul(Numeric n)
 	{
@@ -104,7 +94,6 @@ public class RationalNumeric implements Numeric
 	}
 	
 	/**
-	 *
 	 * @param m first number
 	 * @param n second number
 	 * @return greatest common divider
