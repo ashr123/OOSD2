@@ -1,4 +1,6 @@
 import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Represents a subclass of {@link Element} that represents a (finite) set of elements.
@@ -6,16 +8,17 @@ import java.util.LinkedList;
 public class Set implements Element
 {
 	private LinkedList<Element> set;
-	
+	private LinkedList<Element> powerSets;
 	/**
 	 * Constructs an empty {@link #set}.
 	 */
-	public Set()
+	Set()
 	{
 		set=new LinkedList<>();
+		powerSets=new LinkedList<>();
 	}
 	
-	public Set(LinkedList<Element> list)
+	private Set(LinkedList<Element> list)
 	{
 		set=list;
 	}
@@ -75,7 +78,6 @@ public class Set implements Element
 		for (Element e : s.set)
 			if (member(e))
 				output.insert(e);
-		;
 		return output;
 	}
 	
@@ -93,32 +95,36 @@ public class Set implements Element
 	}
 	
 	/**
-	 * @return a power-set of this {@link #set} by calling {@link #power(LinkedList)}.
+	 * @return a power-set of this {@link #set} by calling {@link #power(List, int, Set)}.
 	 */
 	Set power()
 	{
-		return power(set);
+		power(set.subList(0, size()), 0, new Set());
+		return new Set(powerSets);
 	}
 	
 	/**
-	 * @param subList this subset.
-	 * @return a power-set of this {@link #set}.
+	 * @param originalSet a copy of this set.
+	 * @param pos the element location to be insert to the power-set.
+	 * @param currSet accumulator of the power set.
 	 */
-	private static Set power(LinkedList<Element> subList)
+	private void power(List<Element> originalSet, int pos, Set currSet)
 	{
-		Set output=new Set();
-		for (Element element : subList)
+		if (originalSet==null)
+			return;
+		if (pos>=originalSet.size())
 		{
-			for (Element outputI : output.set)
-			{
-				Set newSet=new Set();
-				newSet.insert(outputI);
-				newSet.insert(element);
-				output.insert(newSet);
-			}
-			output.insert(new Set(subList));
+			powerSets.push(currSet);
+			return;
 		}
+		Set currSet2=new Set((LinkedList<Element>)currSet.set.clone());
+		if (originalSet.get(pos) instanceof Set)
+			currSet.insert(((Set)originalSet.get(pos)).power());
+		else
+			currSet.insert(originalSet.get(pos));
 		
+		power(originalSet,  pos+1, currSet);
+		power(originalSet,  pos+1, currSet2);
 		
 //		Set output=new Set();
 //		if (subList.isEmpty())
@@ -137,7 +143,6 @@ public class Set implements Element
 //			output.insert(newSet);
 //		}
 //		return output;
-		return null;
 	}
 	
 	/**
@@ -187,12 +192,9 @@ public class Set implements Element
 	@Override
 	public Element transformAdd(Numeric n)
 	{
-		for (Element e : set)
-		{
-			Element temp=e.transformAdd(n);
-			if (temp!=e)
-				remove(e).insert(temp);
-		}
+		ListIterator<Element> elementListIterator=set.listIterator();
+		while (elementListIterator.hasNext())
+			elementListIterator.set(elementListIterator.next().transformAdd(n));
 		return this;
 	}
 	
@@ -204,12 +206,9 @@ public class Set implements Element
 	@Override
 	public Element transformMul(Numeric n)
 	{
-		for (Element e : set)
-		{
-			Element temp=e.transformMul(n);
-			if (temp!=e)
-				remove(e).insert(temp);
-		}
+		ListIterator<Element> elementListIterator=set.listIterator();
+		while (elementListIterator.hasNext())
+			elementListIterator.set(elementListIterator.next().transformMul(n));
 		return this;
 	}
 	
