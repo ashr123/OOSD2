@@ -9,6 +9,7 @@ public class Set implements Element
 {
 	private LinkedList<Element> set;
 	private LinkedList<Element> powerSets;
+	
 	/**
 	 * Constructs an empty {@link #set}.
 	 */
@@ -118,11 +119,11 @@ public class Set implements Element
 			return;
 		}
 		Set currSet2=new Set((LinkedList<Element>)currSet.set.clone());
-			currSet.insert(originalSet.get(pos));
+		currSet.insert(originalSet.get(pos));
 		
-		power(originalSet,  pos+1, currSet);
-		power(originalSet,  pos+1, currSet2);
-		
+		power(originalSet, pos+1, currSet);
+		power(originalSet, pos+1, currSet2);
+
 //		Set output=new Set();
 //		if (subList.isEmpty())
 //		{
