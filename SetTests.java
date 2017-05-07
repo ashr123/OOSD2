@@ -129,7 +129,6 @@ class SetTests
 		set.insert(new RealNumeric(3));
 		set.insert(new RationalNumeric(3, 4));
 		assertEquals("{3,4.5,5,2.75}", set.transformAdd(new RealNumeric(2)).toString());
-		
 	}
 	
 	@Test

@@ -123,24 +123,6 @@ public class Set implements Element
 		
 		power(originalSet, pos+1, currSet);
 		power(originalSet, pos+1, currSet2);
-
-//		Set output=new Set();
-//		if (subList.isEmpty())
-//		{
-//			output.insert(new Set());
-//			return output;
-//		}
-//		Element head=subList.getFirst();
-//		LinkedList<Element> rest=new LinkedList<>(subList.subList(1, subList.size()));
-//		for (Element e : power(rest).set)
-//		{
-//			Set newSet=new Set();
-//			newSet.insert(e);
-//			newSet.insert(head);
-//			output.insert(e);
-//			output.insert(newSet);
-//		}
-//		return output;
 	}
 	
 	/**
