@@ -67,7 +67,6 @@ class SetTests
 		set2.insert(new RealNumeric(5));
 		set2.insert(new RealNumeric(4));
 		assertEquals("{3}", set1.difference(set2).toString());
-		
 	}
 	
 	@Test
@@ -77,7 +76,6 @@ class SetTests
 		set.insert(new RealNumeric(1));
 		set.insert(new RealNumeric(2));
 		assertEquals("{{},{2},{1},{1,2}}", set.power().toString());
-		
 	}
 	
 	@Test
