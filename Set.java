@@ -118,9 +118,6 @@ public class Set implements Element
 			return;
 		}
 		Set currSet2=new Set((LinkedList<Element>)currSet.set.clone());
-		if (originalSet.get(pos) instanceof Set)
-			currSet.insert(((Set)originalSet.get(pos)).power());
-		else
 			currSet.insert(originalSet.get(pos));
 		
 		power(originalSet,  pos+1, currSet);
