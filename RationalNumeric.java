@@ -27,8 +27,11 @@ public class RationalNumeric implements Numeric
 		{
 			int f=gcd(getA(), ((RationalNumeric)n).getA());
 			int g=gcd(getB(), ((RationalNumeric)n).getB());
-			setA((getA()/f)*(((RationalNumeric)n).getB()/g)+(((RationalNumeric)n).getA()/f)*(getB()/g));
-			setB(lcm(getB(), ((RationalNumeric)n).getB()));
+			RationalNumeric temp= new RationalNumeric((getA()/f)*(((RationalNumeric)n).getB()/g)+
+			                           (((RationalNumeric)n).getA()/f)*(getB()/g),
+			                           lcm(getB(), ((RationalNumeric)n).getB()));
+			setA(temp.getA());
+			setB(temp.getB());
 		}
 		else
 			return new RealNumeric((double)getA()/getB()+((RealNumeric)n).getNum());
@@ -44,8 +47,9 @@ public class RationalNumeric implements Numeric
 		{
 			RationalNumeric c=new RationalNumeric(getA(), ((RationalNumeric)n).getB());
 			RationalNumeric d=new RationalNumeric(((RationalNumeric)n).getA(), getB());
-			setA(c.getA()*d.getA());
-			setB(c.getB()*d.getB());
+			RationalNumeric temp=new RationalNumeric(c.getA()*d.getA(), c.getB()*d.getB());
+			setA(temp.getA());
+			setB(temp.getB());
 		}
 		else
 			return new RealNumeric((double)getA()/getB()*((RealNumeric)n).getNum());
