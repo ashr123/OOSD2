@@ -239,7 +239,7 @@ public class Calculator
 			{
 				nextToken=nextToken.substring(0, nextToken.length()-1); //Removes the "}"
 				isFinished++;
-				if ((--bracesCount<0 && nextToken.contentEquals("}")) || (nextToken.length()==0 && bracesCount!=0))
+				if ((--bracesCount<0 && nextToken.contentEquals("}")) || (!stk.hasMoreElements() && bracesCount!=0))
 				{
 					System.out.print("Error: cannot parse "+rest);
 					return null;
