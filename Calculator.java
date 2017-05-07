@@ -53,7 +53,7 @@ public class Calculator
 			case "size"://Works
 				System.out.println(mySet==null ? "" : /*mySet+"\n"+*/mySet.size());
 				break;
-			case "contains"://Woks
+			case "contains"://Works
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -113,7 +113,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.remove(tempSet));
 				break;
-			case "union"://works
+			case "union"://Works
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -123,7 +123,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.union((Set)tempSet));
 				break;
-			case "intersect"://works
+			case "intersect"://Works
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
