@@ -50,10 +50,10 @@ public class Calculator
 		Element tempSet;
 		switch (command)
 		{
-			case "size"://Works
+			case "size":
 				System.out.println(mySet==null ? "" : /*mySet+"\n"+*/mySet.size());
 				break;
-			case "contains"://Works
+			case "contains":
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -63,7 +63,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.contains((Set)tempSet));
 				break;
-			case "member"://Works
+			case "member":
 				temp=stk.nextToken();
 				tempSet=nextElementOrSet(temp);
 				if (temp==null || tempSet==null)
@@ -73,7 +73,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.member(tempSet));
 				break;
-			case "deepExistence"://Works
+			case "deepExistence":
 				temp=stk.nextToken();
 				tempSet=nextElementOrSet(temp);
 				if (temp==null || tempSet==null)
@@ -83,7 +83,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.deepExistence(tempSet));
 				break;
-			case "equals"://Works
+			case "equals":
 				temp=stk.nextToken();
 				tempSet=nextElementOrSet(temp);
 				if (temp==null || tempSet==null)
@@ -93,7 +93,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.equals(tempSet));
 				break;
-			case "insert"://Works
+			case "insert":
 				temp=stk.nextToken();
 				tempSet=nextElementOrSet(temp);
 				if (temp==null || tempSet==null)
@@ -103,7 +103,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.insert(tempSet));
 				break;
-			case "remove"://Works
+			case "remove":
 				temp=stk.nextToken();
 				tempSet=nextElementOrSet(temp);
 				if (temp==null || tempSet==null)
@@ -113,7 +113,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.remove(tempSet));
 				break;
-			case "union"://Works
+			case "union":
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -123,7 +123,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.union((Set)tempSet));
 				break;
-			case "intersect"://Works
+			case "intersect":
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -133,7 +133,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.intersect((Set)tempSet));
 				break;
-			case "difference"://Works
+			case "difference":
 				temp=stk.nextToken();
 				tempSet=setParser(temp);
 				if (temp==null || tempSet==null)
@@ -143,10 +143,10 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.difference((Set)tempSet));
 				break;
-			case "power"://Maybe
+			case "power":
 				System.out.println(mySet==null ? "" : mySet.power());
 				break;
-			case "transformAdd"://Works
+			case "transformAdd":
 				temp=stk.nextToken();
 				tempSet=elementParser(temp);
 				if (temp==null || tempSet==null)
@@ -156,7 +156,7 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.transformAdd((Numeric)tempSet));
 				break;
-			case "transformMul"://Works
+			case "transformMul":
 				temp=stk.nextToken();
 				tempSet=elementParser(temp);
 				if (temp==null || tempSet==null)
@@ -166,16 +166,16 @@ public class Calculator
 				}
 				System.out.println(mySet==null ? "" : mySet.transformMul((Numeric)tempSet));
 				break;
-			case "help"://Works
+			case "help":
 				printHelp();
 				break;
-			case "bonus"://Works
+			case "bonus":
 				getBonus();
 				break;
-			case "exit"://Works
+			case "exit":
 				System.exit(0);
 				break;
-			default://Works
+			default:
 				System.out.println("Error: invalid command");
 		}
 	}
@@ -189,7 +189,8 @@ public class Calculator
 	
 	private static void printHelp()
 	{
-		System.out.println("size <set>\ncontains <set> <set>\nmember <set> <element>\ndeepExistence <set> <element>\nequals <element> <element>\ninsert <set> <element>\nremove <set> <element>\nunion <set> <set>\nintersect <set> <set>\ndifference <set> <set>\npower <set>\ntransformAdd <element> <numeric>\ntransformMul <element> <numeric>\nhelp\nbonus\nexit");
+		System.out.println(
+				"size <set>\ncontains <set> <set>\nmember <set> <element>\ndeepExistence <set> <element>\nequals <element> <element>\ninsert <set> <element>\nremove <set> <element>\nunion <set> <set>\nintersect <set> <set>\ndifference <set> <set>\npower <set>\ntransformAdd <element> <numeric>\ntransformMul <element> <numeric>\nhelp\nbonus\nexit");
 	}
 	
 	private static Element elementParser(String s)
@@ -238,13 +239,19 @@ public class Calculator
 			{
 				nextToken=nextToken.substring(0, nextToken.length()-1); //Removes the "}"
 				isFinished++;
-				if (--bracesCount<0 || nextToken.contentEquals("}"))
+				if ((--bracesCount<0 && nextToken.contentEquals("}")) || (nextToken.length()==0 && bracesCount!=0))
 				{
 					System.out.print("Error: cannot parse "+rest);
 					return null;
 				}
 			}
 			if (nextToken.length()!=0)
+			{
+				if (bracesCount==0 && isFinished<=0)
+				{
+					System.out.print("Error: "+rest+" is not a set!");
+					return null;
+				}
 				try
 				{
 					if (nextToken.contains("/"))// It's a Rational Number.
@@ -265,6 +272,7 @@ public class Calculator
 					System.out.print("Error: cannot parse "+rest);
 					return null;
 				}
+			}
 			while (myStack.size()>1 && isFinished>0)
 			{
 				Set temp=myStack.pop();
