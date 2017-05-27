@@ -20,6 +20,36 @@ public class RationalNumeric implements Numeric
 		this.b=b/g;
 	}
 	
+	/**
+	 * @param m first number
+	 * @param n second number
+	 * @return greatest common divider
+	 */
+	private static int gcd(int m, int n)
+	{
+		if (m<0)
+			m=-m;
+		if (n<0)
+			n=-n;
+		if (0==n)
+			return m;
+		else return gcd(n, m%n);
+	}
+	
+	/**
+	 * @param m first number
+	 * @param n second number
+	 * @return lowest common multiplier
+	 */
+	private static int lcm(int m, int n)
+	{
+		if (m<0)
+			m=-m;
+		if (n<0)
+			n=-n;
+		return m*(n/gcd(m, n));// parentheses important to avoid overflow
+	}
+	
 	@Override
 	public Numeric transformAdd(Numeric n)
 	{
@@ -28,8 +58,8 @@ public class RationalNumeric implements Numeric
 			int f=gcd(getA(), ((RationalNumeric)n).getA());
 			int g=gcd(getB(), ((RationalNumeric)n).getB());
 			RationalNumeric temp=new RationalNumeric((getA()/f)*(((RationalNumeric)n).getB()/g)+
-			                           (((RationalNumeric)n).getA()/f)*(getB()/g),
-			                           lcm(getB(), ((RationalNumeric)n).getB()));
+			                                         (((RationalNumeric)n).getA()/f)*(getB()/g),
+			                                         lcm(getB(), ((RationalNumeric)n).getB()));
 			setA(temp.getA());
 			setB(temp.getB());
 		}
@@ -81,7 +111,7 @@ public class RationalNumeric implements Numeric
 	@Override
 	public String toString()
 	{
-		return getA()/getB()<1 ? getA()+"/"+getB() : (isIntable()? getA()/getB() :(double)getA()/getB())+"";
+		return getA()/getB()<1 ? getA()+"/"+getB() : (isIntable() ? getA()/getB() : (double)getA()/getB())+"";
 	}
 	
 	@Override
@@ -95,35 +125,5 @@ public class RationalNumeric implements Numeric
 	private boolean isIntable()
 	{
 		return (double)getA()/getB()==getA()/getB();
-	}
-	
-	/**
-	 * @param m first number
-	 * @param n second number
-	 * @return greatest common divider
-	 */
-	private static int gcd(int m, int n)
-	{
-		if (m<0)
-			m=-m;
-		if (n<0)
-			n=-n;
-		if (0==n)
-			return m;
-		else return gcd(n, m%n);
-	}
-	
-	/**
-	 * @param m first number
-	 * @param n second number
-	 * @return lowest common multiplier
-	 */
-	private static int lcm(int m, int n)
-	{
-		if (m<0)
-			m=-m;
-		if (n<0)
-			n=-n;
-		return m*(n/gcd(m, n));// parentheses important to avoid overflow
 	}
 }

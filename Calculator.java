@@ -11,13 +11,11 @@ public class Calculator
 		System.out.println("==========================");
 		//noinspection InfiniteLoopStatement
 		while (true)
-			calc(myScanner.nextLine());
+			calc(myScanner.nextLine().trim());
 	}
 	
 	private static void calc(String instruction)
 	{
-		while (instruction.length()!=0 && instruction.charAt(0)==' ')
-			instruction=instruction.substring(1);
 		if (instruction.equals(""))
 			return;
 		StringTokenizer stk=new StringTokenizer(instruction, " ");
